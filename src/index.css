@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #0A0D10;
+    color: #EAE2D8;
+    overflow-x: hidden;
+  }
+
+  /* Refined custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0A0D10;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #232B35;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #D4AF37;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    background: rgba(19, 24, 30, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-card {
+    background: rgba(22, 29, 36, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.7), 0 0 20px -5px rgba(212, 175, 55, 0.15);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 24px rgba(212, 175, 55, 0.35);
+  }
+
+  .bg-radial-vignette {
+    background: radial-gradient(circle at center, transparent 40%, rgba(10, 13, 16, 0.85) 100%);
+  }
+}
+
+/* Print styling for printing / saving clean PDF of Itinerary */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #111111 !important;
+  }
+
+  nav, footer, .no-print, button:not(.print-include) {
+    display: none !important;
+  }
+
+  .glass-panel, .glass-card {
+    background: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    color: #111111 !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+}

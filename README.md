@@ -3,6 +3,10 @@
 > **Front-End Developer Assignment Submission**  
 > An editorial-grade travel web application built with **React**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**, powered by **Google Gemini AI**, **OpenWeather**, **Open-Meteo Telemetry**, and **Unsplash**.
 
+### 🔗 Live Links
+- 🌐 **Live Deployed Application**: [https://temporary-flying-iron-b8p6hde.vercel.app](https://temporary-flying-iron-b8p6hde.vercel.app)
+- 📦 **Public GitHub Repository**: [https://github.com/vishnu6301382491-dev/DESIGNESTHETICS-TRAVEL-APPLICATION](https://github.com/vishnu6301382491-dev/DESIGNESTHETICS-TRAVEL-APPLICATION)
+
 ---
 
 ## 🌟 Overview

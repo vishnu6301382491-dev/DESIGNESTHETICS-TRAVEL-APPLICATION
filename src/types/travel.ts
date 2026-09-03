@@ -9,6 +9,7 @@ export type TravelVibe =
   | 'Urban' 
   | 'Adventure'
   | 'Art & Culture'
+  | 'Architecture'
   | 'Nature';
 
 export type BudgetTier = '$' | '$$' | '$$$' | '$$$$';
@@ -16,7 +17,7 @@ export type BudgetTier = '$' | '$$' | '$$$' | '$$$$';
 export interface FamousPlace {
   id: string;
   name: string;
-  category: 'Architecture' | 'Nature' | 'Historic' | 'Culinary' | 'Art & Culture' | 'Sacred' | 'Wellness' | 'Adventure';
+  category: 'Architecture' | 'Nature' | 'Historic' | 'Culinary' | 'Art & Culture' | 'Sacred' | 'Wellness' | 'Adventure' | 'Heritage' | 'Coastal' | 'Landmark';
   description: string;
   insiderTip: string;
   bestTimeToVisit: string;

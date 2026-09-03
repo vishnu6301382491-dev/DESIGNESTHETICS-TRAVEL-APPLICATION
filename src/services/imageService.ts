@@ -14,7 +14,21 @@ export async function fetchDynamicImage(query: string, fallbackUrl: string): Pro
     return imageCache.get(cleanQuery)!;
   }
 
-  // 1. Try Unsplash API if key is present
+  // 1. Try serverless backend proxy if deployed on Vercel
+  try {
+    const proxyRes = await fetch(`/api/images?query=${encodeURIComponent(query)}`, { signal: AbortSignal.timeout(3000) });
+    if (proxyRes.ok) {
+      const data = await proxyRes.json();
+      if (data.imageUrl) {
+        imageCache.set(cleanQuery, data.imageUrl);
+        return data.imageUrl;
+      }
+    }
+  } catch (err) {
+    // Expected on static hosts
+  }
+
+  // 2. Try Unsplash API if key is present
   if (UNSPLASH_ACCESS_KEY && UNSPLASH_ACCESS_KEY !== 'YOUR_UNSPLASH_KEY') {
     try {
       const res = await fetch(

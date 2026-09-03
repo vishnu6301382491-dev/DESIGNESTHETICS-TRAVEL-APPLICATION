@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Compass, MapPin, Heart, Sparkles, Calendar, Menu, X } from 'lucide-react';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { Compass, MapPin, Heart, Sparkles, Calendar, Menu, X, Globe } from 'lucide-react';
 import { UserLocation, TemperatureUnit } from '../../types/travel';
 
 interface NavbarProps {
@@ -9,8 +10,7 @@ interface NavbarProps {
   onToggleTempUnit: () => void;
   savedCount: number;
   onOpenWishlist: () => void;
-  onOpenAIChat: () => void;
-  onOpenItineraryPlanner: () => void;
+  onOpenAIChatDrawer: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -20,61 +20,73 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleTempUnit,
   savedCount,
   onOpenWishlist,
-  onOpenAIChat,
-  onOpenItineraryPlanner
+  onOpenAIChatDrawer,
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && mobileMenuOpen) {
+        setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [mobileMenuOpen]);
+
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+    `transition-colors duration-200 tracking-wide flex items-center gap-1.5 py-1 ${
+      isActive
+        ? 'text-champagne font-semibold border-b border-champagne'
+        : 'text-sand-300 hover:text-sand-50'
+    }`;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#0A0D10]/85 backdrop-blur-md border-b border-white/10 py-3.5 shadow-luxury'
-          : 'bg-gradient-to-b from-black/80 via-black/30 to-transparent py-5'
+          ? 'bg-[#0A0D10]/90 backdrop-blur-md border-b border-white/10 py-3 shadow-luxury'
+          : 'bg-gradient-to-b from-black/80 via-black/30 to-transparent py-4'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
-        <a href="#" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-full bg-champagne/10 border border-champagne/40 flex items-center justify-center text-champagne group-hover:scale-105 transition-transform duration-300">
+        <Link to="/" className="flex items-center gap-2.5 group">
+          <div className="w-8 h-8 rounded-full bg-champagne/15 border border-champagne/40 flex items-center justify-center text-champagne group-hover:scale-105 transition-transform duration-300 shadow-glow-gold">
             <Compass className="w-4 h-4" />
           </div>
           <span className="font-serif text-2xl tracking-wider text-sand-50 font-normal">
             designesthetics<span className="text-champagne font-bold">.</span>
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-7 text-sm font-medium tracking-wide text-sand-300">
-          <a href="#explorer" className="hover:text-champagne transition-colors duration-200">
-            Destinations
-          </a>
-          <a href="#famous-places" className="hover:text-champagne transition-colors duration-200">
-            Famous Places
-          </a>
-          <button
-            onClick={onOpenItineraryPlanner}
-            className="flex items-center gap-1.5 hover:text-champagne transition-colors duration-200"
-          >
-            <Calendar className="w-4 h-4 text-champagne" />
-            <span>Itinerary Planner</span>
-          </button>
-          <button
-            onClick={onOpenAIChat}
-            className="flex items-center gap-1.5 text-champagne hover:text-champagne-light transition-colors duration-200"
-          >
-            <Sparkles className="w-4 h-4 animate-pulse" />
+        <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-sand-300">
+          <NavLink to="/" className={navLinkClass}>
+            Home
+          </NavLink>
+          <NavLink to="/explore" className={navLinkClass}>
+            Explore Havens
+          </NavLink>
+          <NavLink to="/planner" className={navLinkClass}>
+            <Calendar className="w-3.5 h-3.5 text-champagne" />
+            <span>Trip Planner</span>
+          </NavLink>
+          <NavLink to="/assistant" className={navLinkClass}>
+            <Sparkles className="w-3.5 h-3.5 text-champagne" />
             <span>AI Concierge</span>
-          </button>
+          </NavLink>
         </nav>
 
         {/* Right Actions */}
@@ -83,11 +95,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             onClick={onOpenLocationModal}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-sand-200 transition-all duration-200"
-            title="Update Departure / Current Location"
+            title="Departure Point: View or Change Origin City"
           >
             <MapPin className="w-3.5 h-3.5 text-champagne" />
-            <span className="max-w-[130px] truncate">
-              {userLocation ? `${userLocation.city}` : 'Set Location'}
+            <span className="max-w-[120px] truncate">
+              {userLocation ? `${userLocation.city}` : 'Set Origin'}
             </span>
           </button>
 
@@ -114,9 +126,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
-          {/* Plan Trip CTA */}
+          {/* Plan Trip CTA Button */}
           <button
-            onClick={onOpenItineraryPlanner}
+            onClick={() => navigate('/planner')}
             className="px-4 py-1.5 rounded-full bg-champagne text-black text-xs font-semibold tracking-wider uppercase hover:bg-champagne-light transition-all duration-200 shadow-glow-gold"
           >
             Plan Trip
@@ -133,47 +145,43 @@ export const Navbar: React.FC<NavbarProps> = ({
         </button>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Accessible Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#0A0D10]/95 backdrop-blur-xl border-b border-white/10 px-6 py-5 space-y-4">
-          <div className="flex flex-col gap-3 text-sm text-sand-200 font-medium">
-            <a
-              href="#explorer"
+        <div className="md:hidden bg-[#0A0D10]/95 backdrop-blur-xl border-b border-white/10 px-6 py-6 space-y-5 animate-fadeIn">
+          <div className="flex flex-col gap-4 text-xs font-mono uppercase tracking-widest text-sand-200">
+            <Link
+              to="/"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/5"
+              className="py-2 border-b border-white/5 hover:text-champagne"
             >
-              Destinations
-            </a>
-            <a
-              href="#famous-places"
+              Home
+            </Link>
+            <Link
+              to="/explore"
               onClick={() => setMobileMenuOpen(false)}
-              className="py-2 border-b border-white/5"
+              className="py-2 border-b border-white/5 hover:text-champagne"
             >
-              Famous Places
-            </a>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenItineraryPlanner();
-              }}
-              className="flex items-center gap-2 py-2 text-left border-b border-white/5 text-champagne"
+              Explore Havens
+            </Link>
+            <Link
+              to="/planner"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-2 border-b border-white/5 text-champagne"
             >
               <Calendar className="w-4 h-4" />
-              Itinerary Planner
-            </button>
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                onOpenAIChat();
-              }}
-              className="flex items-center gap-2 py-2 text-left border-b border-white/5 text-champagne"
+              Trip Planner
+            </Link>
+            <Link
+              to="/assistant"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center gap-2 py-2 border-b border-white/5 text-champagne"
             >
               <Sparkles className="w-4 h-4" />
-              AI Concierge
-            </button>
+              AI Concierge Salon
+            </Link>
           </div>
 
-          <div className="flex items-center justify-between pt-2">
+          <div className="flex items-center justify-between pt-3 border-t border-white/10">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -182,14 +190,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-white/5 text-xs text-sand-200"
             >
               <MapPin className="w-3.5 h-3.5 text-champagne" />
-              <span>{userLocation ? userLocation.city : 'Set Location'}</span>
+              <span>{userLocation ? userLocation.city : 'Set Origin'}</span>
             </button>
             <div className="flex items-center gap-2">
               <button
                 onClick={onToggleTempUnit}
                 className="px-3 py-2 rounded-lg bg-white/5 text-xs font-mono text-sand-200"
               >
-                Unit: °{tempUnit}
+                °{tempUnit}
               </button>
               <button
                 onClick={() => {

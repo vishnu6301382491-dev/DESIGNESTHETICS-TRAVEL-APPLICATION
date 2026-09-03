@@ -23,60 +23,76 @@ export async function sendChatMessage(
   destinationContext?: Destination,
   chatHistory: { role: 'user' | 'model'; text: string }[] = []
 ): Promise<string> {
-  if (!GEMINI_API_KEY || GEMINI_API_KEY === 'YOUR_GEMINI_KEY') {
-    return generateFallbackChatResponse(message, destinationContext);
-  }
-
-  try {
-    const contextPrompt = destinationContext
-      ? `CURRENT DESTINATION CONTEXT: The user is currently exploring ${destinationContext.name}, ${destinationContext.country}.
+  const contextPrompt = destinationContext
+    ? `CURRENT DESTINATION CONTEXT: The user is currently exploring ${destinationContext.name}, ${destinationContext.country}.
 Tagline: "${destinationContext.tagline}".
 Known places: ${destinationContext.famousPlaces.map(p => p.name).join(', ')}.
 Local delicacies: ${destinationContext.localDelicacies.join(', ')}.
 Best season: ${destinationContext.bestSeason}.`
-      : 'The user is exploring the global destination collection.';
+    : 'The user is exploring the global destination collection.';
 
-    const contents = [
-      {
-        role: 'user',
-        parts: [{ text: `${SYSTEM_CONCIERGE_PROMPT}\n\n${contextPrompt}` }]
-      },
-      {
-        role: 'model',
-        parts: [{ text: 'Understood. I am your designesthetics concierge. How may I elevate your travel voyage today?' }]
-      },
-      ...chatHistory.map(h => ({
-        role: h.role,
-        parts: [{ text: h.text }]
-      })),
-      {
-        role: 'user',
-        parts: [{ text: message }]
-      }
-    ];
+  const contents = [
+    {
+      role: 'user',
+      parts: [{ text: `${SYSTEM_CONCIERGE_PROMPT}\n\n${contextPrompt}` }]
+    },
+    {
+      role: 'model',
+      parts: [{ text: 'Understood. I am your designesthetics concierge. How may I elevate your travel voyage today?' }]
+    },
+    ...chatHistory.map(h => ({
+      role: h.role,
+      parts: [{ text: h.text }]
+    })),
+    {
+      role: 'user',
+      parts: [{ text: message }]
+    }
+  ];
 
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents,
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 800,
-          }
-        })
-      }
-    );
-
-    if (response.ok) {
-      const data = await response.json();
+  // 1. Try serverless backend proxy on Vercel
+  try {
+    const proxyRes = await fetch('/api/gemini', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents }),
+      signal: AbortSignal.timeout(6000)
+    });
+    if (proxyRes.ok) {
+      const data = await proxyRes.json();
       const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
       if (text) return text;
     }
   } catch (err) {
-    console.warn('Gemini chat error, falling back to local assistant:', err);
+    // Expected on static hosts
+  }
+
+  // 2. Try client-side API key if available
+  if (GEMINI_API_KEY && GEMINI_API_KEY !== 'YOUR_GEMINI_KEY') {
+    try {
+      const response = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents,
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 800,
+            }
+          })
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (text) return text;
+      }
+    } catch (err) {
+      console.warn('Gemini chat error, falling back to local assistant:', err);
+    }
   }
 
   return generateFallbackChatResponse(message, destinationContext);

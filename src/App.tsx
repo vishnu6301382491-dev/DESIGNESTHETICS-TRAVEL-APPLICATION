@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Bot, Calendar, Heart, MapPin } from 'lucide-react';
+import { HashRouter, Routes, Route } from 'react-router-dom';
+import { Sparkles } from 'lucide-react';
 import { DESTINATIONS_DATA } from './data/destinations';
 import { Destination, UserLocation, TemperatureUnit, Continent } from './types/travel';
 import { requestBrowserLocation } from './services/locationService';
 
-// Components
+// Layout & Global Components
 import { Navbar } from './components/layout/Navbar';
-import { HeroSection } from './components/hero/HeroSection';
-import { LocationBanner } from './components/location/LocationBanner';
-import { LocationModal } from './components/location/LocationModal';
-import { DestinationExplorer } from './components/explorer/DestinationExplorer';
-import { DestinationDetailModal } from './components/detail/DestinationDetailModal';
-import { FamousPlacesSection } from './components/places/FamousPlacesSection';
-import { AIChatDrawer } from './components/ai/AIChatDrawer';
-import { ItineraryPlannerModal } from './components/itinerary/ItineraryPlannerModal';
-import { WishlistModal } from './components/wishlist/WishlistModal';
 import { Footer } from './components/layout/Footer';
+import { LocationModal } from './components/location/LocationModal';
+import { WishlistModal } from './components/wishlist/WishlistModal';
+import { AIChatDrawer } from './components/ai/AIChatDrawer';
+
+// Pages
+import { HomePage } from './pages/HomePage';
+import { ExplorePage } from './pages/ExplorePage';
+import { DestinationDetailPage } from './pages/DestinationDetailPage';
+import { PlannerPage } from './pages/PlannerPage';
+import { AssistantPage } from './pages/AssistantPage';
+import { NotFoundPage } from './pages/NotFoundPage';
 
 export const App: React.FC = () => {
   // State: Destinations
@@ -37,18 +40,15 @@ export const App: React.FC = () => {
   // State: Saved Wishlist
   const [savedIds, setSavedIds] = useState<string[]>(() => {
     const saved = localStorage.getItem('designesthetics_wishlist');
-    return saved ? JSON.parse(saved) : ['kyoto', 'amalfi-coast'];
+    return saved ? JSON.parse(saved) : ['kyoto', 'amalfi-coast', 'paris'];
   });
   const [wishlistModalOpen, setWishlistModalOpen] = useState(false);
 
-  // State: Search & Filters
+  // State: Search & Filters on Homepage
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedContinent, setSelectedContinent] = useState<Continent | 'All'>('All');
 
-  // State: Modals & Drawers
-  const [selectedDestination, setSelectedDestination] = useState<Destination | null>(null);
-  const [itineraryModalOpen, setItineraryModalOpen] = useState(false);
-  const [itineraryTargetDest, setItineraryTargetDest] = useState<Destination | null>(null);
+  // State: Global AI Concierge Drawer
   const [aiChatOpen, setAiChatOpen] = useState(false);
   const [aiChatDestination, setAiChatDestination] = useState<Destination | null>(null);
 
@@ -88,169 +88,133 @@ export const App: React.FC = () => {
     );
   };
 
-  // Open Itinerary Planner for a specific destination
-  const handleOpenItineraryForDest = (dest: Destination) => {
-    setItineraryTargetDest(dest);
-    setItineraryModalOpen(true);
-  };
-
-  // Open AI Chat for a specific destination
-  const handleOpenAIChatForDest = (dest: Destination) => {
-    setAiChatDestination(dest);
-    setAiChatOpen(true);
-  };
-
-  // Scroll smoothly to explorer section
-  const handleScrollToExplorer = () => {
-    const el = document.getElementById('explorer');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   const savedDestinations = destinations.filter((d) => savedIds.includes(d.id));
 
   return (
-    <div className="min-h-screen bg-[#0A0D10] text-[#EAE2D8] flex flex-col selection:bg-champagne selection:text-black">
-      {/* Editorial Navigation Header */}
-      <Navbar
-        userLocation={userLocation}
-        onOpenLocationModal={() => setLocationModalOpen(true)}
-        tempUnit={tempUnit}
-        onToggleTempUnit={() => setTempUnit((prev) => (prev === 'C' ? 'F' : 'C'))}
-        savedCount={savedIds.length}
-        onOpenWishlist={() => setWishlistModalOpen(true)}
-        onOpenAIChat={() => {
-          setAiChatDestination(null);
-          setAiChatOpen(true);
-        }}
-        onOpenItineraryPlanner={() => {
-          setItineraryTargetDest(null);
-          setItineraryModalOpen(true);
-        }}
-      />
-
-      <main className="flex-1">
-        {/* 01. Cinematic Looping Background Video Hero */}
-        <HeroSection
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedContinent={selectedContinent}
-          onSelectContinent={setSelectedContinent}
-          onExploreClick={handleScrollToExplorer}
-          onOpenItineraryPlanner={() => {
-            setItineraryTargetDest(null);
-            setItineraryModalOpen(true);
-          }}
-        />
-
-        {/* 04. Location Awareness Banner */}
-        <LocationBanner
+    <HashRouter>
+      <div className="min-h-screen bg-[#0A0D10] text-[#EAE2D8] flex flex-col selection:bg-champagne selection:text-black">
+        {/* Editorial Navigation Header */}
+        <Navbar
           userLocation={userLocation}
-          onOpenModal={() => setLocationModalOpen(true)}
-          onAutoDetect={handleAutoDetectLocation}
-          isDetecting={isDetectingLocation}
-        />
-
-        {/* 02. Destination Explorer with Search, Filters & Sorting */}
-        <DestinationExplorer
-          destinations={destinations}
-          userLocation={userLocation}
+          onOpenLocationModal={() => setLocationModalOpen(true)}
           tempUnit={tempUnit}
-          savedIds={savedIds}
-          onToggleSave={handleToggleSave}
-          onSelectDestination={(dest) => setSelectedDestination(dest)}
-          onPlanTrip={handleOpenItineraryForDest}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          selectedContinent={selectedContinent}
-          onSelectContinent={setSelectedContinent}
-        />
-
-        {/* 03. Famous Places Showcase */}
-        <FamousPlacesSection
-          destinations={destinations}
-          onSelectDestination={(dest) => setSelectedDestination(dest)}
-          onPlanTrip={handleOpenItineraryForDest}
-        />
-      </main>
-
-      {/* Editorial Footer */}
-      <Footer />
-
-      {/* MODALS & DRAWERS */}
-
-      {/* Destination Detail Modal */}
-      <DestinationDetailModal
-        destination={selectedDestination}
-        onClose={() => setSelectedDestination(null)}
-        userLocation={userLocation}
-        tempUnit={tempUnit}
-        isSaved={selectedDestination ? savedIds.includes(selectedDestination.id) : false}
-        onToggleSave={handleToggleSave}
-        onPlanTrip={(dest) => {
-          setSelectedDestination(null);
-          handleOpenItineraryForDest(dest);
-        }}
-        onOpenAIChat={(dest) => {
-          setSelectedDestination(null);
-          handleOpenAIChatForDest(dest);
-        }}
-      />
-
-      {/* 08. Structured Itinerary Planner Modal */}
-      <ItineraryPlannerModal
-        isOpen={itineraryModalOpen}
-        onClose={() => setItineraryModalOpen(false)}
-        destinations={destinations}
-        initialDestination={itineraryTargetDest}
-      />
-
-      {/* 07. AI Concierge Chat Drawer */}
-      <AIChatDrawer
-        isOpen={aiChatOpen}
-        onClose={() => setAiChatOpen(false)}
-        activeDestination={aiChatDestination}
-        onPlanTrip={(dest) => {
-          setAiChatOpen(false);
-          handleOpenItineraryForDest(dest);
-        }}
-      />
-
-      {/* Location Modal */}
-      <LocationModal
-        isOpen={locationModalOpen}
-        onClose={() => setLocationModalOpen(false)}
-        currentLocation={userLocation}
-        onSelectLocation={setUserLocation}
-      />
-
-      {/* Saved Wishlist Modal */}
-      <WishlistModal
-        isOpen={wishlistModalOpen}
-        onClose={() => setWishlistModalOpen(false)}
-        savedDestinations={savedDestinations}
-        onRemove={handleToggleSave}
-        onSelectDestination={(dest) => setSelectedDestination(dest)}
-        onPlanTrip={handleOpenItineraryForDest}
-      />
-
-      {/* FLOATING ACTION BEACON (AI Concierge Quick Launch) */}
-      {!aiChatOpen && (
-        <button
-          onClick={() => {
+          onToggleTempUnit={() => setTempUnit((prev) => (prev === 'C' ? 'F' : 'C'))}
+          savedCount={savedIds.length}
+          onOpenWishlist={() => setWishlistModalOpen(true)}
+          onOpenAIChatDrawer={() => {
             setAiChatDestination(null);
             setAiChatOpen(true);
           }}
-          aria-label="Open AI Travel Concierge"
-          className="fixed bottom-6 right-6 z-40 p-4 rounded-full bg-champagne text-black hover:bg-champagne-light transition-all shadow-luxury hover:scale-105 group flex items-center gap-2.5 font-semibold text-xs tracking-wider uppercase border border-champagne-light/30 shadow-glow-gold"
-        >
-          <Sparkles className="w-5 h-5 animate-pulse" />
-          <span className="hidden sm:inline">AI Concierge</span>
-          <span className="w-2 h-2 rounded-full bg-black/60 group-hover:scale-125 transition-transform" />
-        </button>
-      )}
-    </div>
+        />
+
+        {/* Main Application Router */}
+        <main className="flex-1">
+          <Routes>
+            {/* 01. Homepage */}
+            <Route
+              path="/"
+              element={
+                <HomePage
+                  userLocation={userLocation}
+                  onOpenLocationModal={() => setLocationModalOpen(true)}
+                  onAutoDetectLocation={handleAutoDetectLocation}
+                  isDetectingLocation={isDetectingLocation}
+                  tempUnit={tempUnit}
+                  savedIds={savedIds}
+                  onToggleSave={handleToggleSave}
+                  searchQuery={searchQuery}
+                  onSearchChange={setSearchQuery}
+                  selectedContinent={selectedContinent}
+                  onSelectContinent={setSelectedContinent}
+                />
+              }
+            />
+
+            {/* 02. Explore Havens Route */}
+            <Route
+              path="/explore"
+              element={
+                <ExplorePage
+                  userLocation={userLocation}
+                  tempUnit={tempUnit}
+                  savedIds={savedIds}
+                  onToggleSave={handleToggleSave}
+                />
+              }
+            />
+
+            {/* 07. Dedicated Destination Detail Page Route */}
+            <Route
+              path="/destinations/:id"
+              element={
+                <DestinationDetailPage
+                  userLocation={userLocation}
+                  tempUnit={tempUnit}
+                  savedIds={savedIds}
+                  onToggleSave={handleToggleSave}
+                />
+              }
+            />
+
+            {/* 08. Dedicated AI Trip Planner Page Route */}
+            <Route path="/planner" element={<PlannerPage />} />
+
+            {/* 07. Dedicated AI Concierge Salon Route */}
+            <Route path="/assistant" element={<AssistantPage />} />
+
+            {/* 404 Catch-All Page */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </main>
+
+        {/* Editorial Footer */}
+        <Footer />
+
+        {/* GLOBAL MODALS & DRAWERS */}
+
+        {/* Location Origin Modal */}
+        <LocationModal
+          isOpen={locationModalOpen}
+          onClose={() => setLocationModalOpen(false)}
+          currentLocation={userLocation}
+          onSelectLocation={setUserLocation}
+        />
+
+        {/* Saved Wishlist Modal */}
+        <WishlistModal
+          isOpen={wishlistModalOpen}
+          onClose={() => setWishlistModalOpen(false)}
+          savedDestinations={savedDestinations}
+          onRemove={handleToggleSave}
+          onSelectDestination={() => {}}
+          onPlanTrip={() => {}}
+        />
+
+        {/* Global AI Concierge Drawer */}
+        <AIChatDrawer
+          isOpen={aiChatOpen}
+          onClose={() => setAiChatOpen(false)}
+          activeDestination={aiChatDestination}
+          onPlanTrip={() => {}}
+        />
+
+        {/* FLOATING ACTION BEACON (AI Concierge Quick Launch) */}
+        {!aiChatOpen && (
+          <button
+            onClick={() => {
+              setAiChatDestination(null);
+              setAiChatOpen(true);
+            }}
+            aria-label="Open AI Travel Concierge"
+            className="fixed bottom-6 right-6 z-40 p-4 rounded-full bg-champagne text-black hover:bg-champagne-light transition-all shadow-luxury hover:scale-105 group flex items-center gap-2.5 font-semibold text-xs tracking-wider uppercase border border-champagne-light/30 shadow-glow-gold"
+          >
+            <Sparkles className="w-5 h-5 animate-pulse" />
+            <span className="hidden sm:inline">AI Concierge</span>
+            <span className="w-2 h-2 rounded-full bg-black/60 group-hover:scale-125 transition-transform" />
+          </button>
+        )}
+      </div>
+    </HashRouter>
   );
 };
 

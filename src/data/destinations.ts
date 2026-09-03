@@ -770,5 +770,314 @@ export const DESTINATIONS_DATA: Destination[] = [
         backupImage: 'https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80'
       }
     ]
+  },
+  {
+    id: 'paris',
+    name: 'Paris',
+    country: 'France',
+    continent: 'Europe',
+    tagline: 'The City of Light, timeless Haussmann boulevards, haute cuisine, and iconic ateliers.',
+    description: 'An enduring monument to human artistic expression. From the sweeping limestone promenades along the Seine to the labyrinthine cobblestones of Saint-Germain-des-Prés, Paris effortlessly balances grand architectural majesty with intimate sidewalk bistro culture.',
+    curatorNote: 'Wander the quays of the Seine at twilight when the streetlamps reflect across the water and the Eiffel Tower begins its hourly golden shimmer.',
+    vibe: ['Heritage', 'Culinary', 'Art & Culture', 'Urban'],
+    coordinates: { lat: 48.8566, lng: 2.3522 },
+    bestSeason: 'April to June & September to October',
+    idealDuration: '4–6 Days',
+    budgetLevel: '$$$',
+    rating: 4.96,
+    reviewCount: 2450,
+    featured: true,
+    heroImageQuery: 'paris eiffel tower seine river autumn france architecture',
+    backupHeroImage: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1600&q=80',
+    culturalTips: [
+      'Always start interactions with a warm "Bonjour, Madame" or "Bonjour, Monsieur".',
+      'Take your time over coffee; cafés are spaces for lingering and reading, never rushed.',
+      'Keep your voice at an intimate, considerate volume in public transit and restaurants.'
+    ],
+    localDelicacies: ['Butter croissants & pain au chocolat', 'Duck Confit with pommes sarladaises', 'Artisanal macarons', 'Aged Comté cheese with crusty baguette'],
+    languages: ['French', 'English widely spoken in hospitality'],
+    currency: 'EUR (€)',
+    famousPlaces: [
+      {
+        id: 'eiffel-tower',
+        name: 'Eiffel Tower',
+        category: 'Architecture',
+        description: 'Gustave Eiffel’s 330-meter wrought-iron masterpiece soaring above the Champ de Mars, offering sweeping panoramic views of Paris.',
+        insiderTip: 'Book summit tickets for dusk so you can witness Paris transition from golden sunset into twinkling twilight.',
+        bestTimeToVisit: '18:00 – 20:00 (Sunset into evening illumination)',
+        timeRequired: '2–3 Hours',
+        admissionFee: '€18 – €29 depending on lift tier',
+        imageQuery: 'eiffel tower paris france sunset champagne',
+        backupImage: 'https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'louvre-museum',
+        name: 'The Louvre Museum & Glass Pyramid',
+        category: 'Art & Culture',
+        description: 'The world\'s most visited art museum, housed within a historic royal fortress, spanning 380,000 objects including the Mona Lisa and Venus de Milo.',
+        insiderTip: 'Enter via the Porte des Lions or Carrousel du Louvre underground mall to bypass the long lines at the central glass pyramid.',
+        bestTimeToVisit: 'Wednesday & Friday evenings when open until 21:45',
+        timeRequired: '3–4 Hours',
+        admissionFee: '€22',
+        imageQuery: 'louvre museum glass pyramid paris night reflection',
+        backupImage: 'https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'sainte-chapelle',
+        name: 'Sainte-Chapelle Gothic Chapel',
+        category: 'Sacred',
+        description: 'A 13th-century radiant Gothic gem renowned for its fifteen soaring stained-glass lancets depicting 1,113 biblical scenes in jewel-like ruby and sapphire.',
+        insiderTip: 'Visit on a bright sunny morning when sunlight directly illuminates the stained glass, turning the upper chapel into a celestial kaleidoscope.',
+        bestTimeToVisit: '10:00 on clear cloudless days',
+        timeRequired: '1 Hour',
+        admissionFee: '€13',
+        imageQuery: 'sainte chapelle stained glass windows paris interior',
+        backupImage: 'https://images.unsplash.com/photo-1543349689-9a4d426bee8e?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'montmartre',
+        name: 'Montmartre & Basilique du Sacré-Cœur',
+        category: 'Heritage',
+        description: 'A bohemian hilltop village once home to Picasso and Renoir, crowned by the Romano-Byzantine travertine dome of Sacré-Cœur.',
+        insiderTip: 'Explore the quiet cobbled stairs of Rue de l\'Abreuvoir and Place Dalida rather than sticking strictly to the touristy Place du Tertre.',
+        bestTimeToVisit: 'Early morning for quiet artist alleys or sunset from the basilica steps',
+        timeRequired: '2–3 Hours',
+        admissionFee: 'Free stroll (Dome climb €8)',
+        imageQuery: 'montmartre cafe street paris sacré coeur',
+        backupImage: 'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?auto=format&fit=crop&w=800&q=80'
+      }
+    ]
+  },
+  {
+    id: 'tokyo',
+    name: 'Tokyo',
+    country: 'Japan',
+    continent: 'Asia',
+    tagline: 'A seamless blend of hyper-modern neon skylines and tranquil Shinto sanctuaries.',
+    description: 'The world\'s most populous metropolis is an architectural playground of ultra-clean efficiency, world-leading Michelin gastronomy, serene cedar shrines, and visionary digital art spaces.',
+    curatorNote: 'Transition between Tokyo\'s contrasting worlds in a single day: meditate at dawn in Meiji Jingu\'s forested quietude, then immerse in the kinetic energy of Shibuya at night.',
+    vibe: ['Urban', 'Culinary', 'Heritage', 'Art & Culture'],
+    coordinates: { lat: 35.6762, lng: 139.6503 },
+    bestSeason: 'March to May (Sakura) & October to November (Autumn leaves)',
+    idealDuration: '5–7 Days',
+    budgetLevel: '$$$',
+    rating: 4.97,
+    reviewCount: 3120,
+    featured: true,
+    heroImageQuery: 'tokyo japan shibuya crossing night neon city',
+    backupHeroImage: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1600&q=80',
+    culturalTips: [
+      'Stand on the left side of escalators in Tokyo (walk on the right).',
+      'Never walk while eating street food; finish meals at the stall or in designated seating.',
+      'Tipping is not practiced and may cause confusion; extraordinary service is standard.'
+    ],
+    localDelicacies: ['Edomae Nigiri Sushi at Tsukiji Outer Market', 'Tonkotsu & Shoyu Ramen', 'Wagyu Beef Teppanyaki', 'Matcha parfaits & soft serve'],
+    languages: ['Japanese', 'English signage throughout subway systems'],
+    currency: 'JPY (¥)',
+    famousPlaces: [
+      {
+        id: 'shibuya-crossing',
+        name: 'Shibuya Scramble Crossing & Hachiko',
+        category: 'Architecture',
+        description: 'The world’s busiest pedestrian intersection where up to 3,000 people cross simultaneously beneath colossal luminous digital billboards.',
+        insiderTip: 'Head up to the Shibuya Sky observation deck on the 47th floor for a dizzying, open-air view straight down at the crosswalk.',
+        bestTimeToVisit: 'Dusk into night (19:00 – 21:00) when all neon screens are ablaze',
+        timeRequired: '1.5 Hours',
+        admissionFee: 'Free crossing (Shibuya Sky ¥2,200)',
+        imageQuery: 'shibuya crossing tokyo neon night crosswalk',
+        backupImage: 'https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'senso-ji',
+        name: 'Senso-ji Temple & Nakamise-dori',
+        category: 'Sacred',
+        description: 'Tokyo\'s oldest Buddhist temple founded in 645 AD, entered through the monumental Kaminarimon Thunder Gate with its giant red paper lantern.',
+        insiderTip: 'Visit after 20:00 when the market stalls close; the temple grounds remain open and beautifully illuminated without the daytime crowds.',
+        bestTimeToVisit: 'Evening after 20:00 or morning before 08:30',
+        timeRequired: '2 Hours',
+        admissionFee: 'Free admission',
+        imageQuery: 'sensoji temple asakusa tokyo red lantern',
+        backupImage: 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'meiji-shrine',
+        name: 'Meiji Jingu Shinto Sanctuary',
+        category: 'Nature',
+        description: 'Dedicated to Emperor Meiji, this serene forest of 120,000 evergreen trees forms an oasis of silence in the heart of bustling Harajuku.',
+        insiderTip: 'Walk the wide gravel approach path slowly and admire the massive ceremonial wall of sake barrels donated from breweries across Japan.',
+        bestTimeToVisit: 'Morning around 08:00 for crisp, reverent calm',
+        timeRequired: '2 Hours',
+        admissionFee: 'Free admission',
+        imageQuery: 'meiji shrine torii gate tokyo forest',
+        backupImage: 'https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'teamlab-planets',
+        name: 'teamLab Planets Digital Art Museum',
+        category: 'Art & Culture',
+        description: 'An interactive barefoot museum where visitors wade through water and wander through floating orchid gardens and crystal infinity mirrors.',
+        insiderTip: 'Wear pants that can be rolled up past the knee, as you will wade through knee-deep water installations.',
+        bestTimeToVisit: 'Morning opening slot or last admission at 20:00',
+        timeRequired: '2 Hours',
+        admissionFee: '¥3,800',
+        imageQuery: 'teamlab planets tokyo crystal infinity light digital',
+        backupImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80'
+      }
+    ]
+  },
+  {
+    id: 'dubai',
+    name: 'Dubai',
+    country: 'United Arab Emirates',
+    continent: 'Asia',
+    tagline: 'Futuristic architectural ambition rising majestically from desert sands.',
+    description: 'An audacious global metropolis where sky-scraping spires, palm-shaped archipelagos, luxury desert retreats, and fragrant spice souks co-exist along the Arabian Gulf.',
+    curatorNote: 'Contrast Dubai\'s high-tech skyline with an Abra wooden boat ride across Dubai Creek at sunset for just 1 AED.',
+    vibe: ['Urban', 'Coastal', 'Architecture', 'Culinary'],
+    coordinates: { lat: 25.2048, lng: 55.2708 },
+    bestSeason: 'November to March (Winter with perfect beach weather)',
+    idealDuration: '4–5 Days',
+    budgetLevel: '$$$$',
+    rating: 4.88,
+    reviewCount: 1980,
+    featured: false,
+    heroImageQuery: 'dubai burj khalifa skyline sunset arabian gulf architecture',
+    backupHeroImage: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1600&q=80',
+    culturalTips: [
+      'Dress respectfully in public malls and cultural heritage sites.',
+      'Show respect during Islamic prayer hours and the Holy Month of Ramadan.',
+      'Always ask permission before photographing local residents.'
+    ],
+    localDelicacies: ['Emirati Machboos spiced rice with lamb', 'Fresh camel milk gelato & dates', 'Grilled Persian gulf hammour', 'Luqaimat sweet dumplings with date syrup'],
+    languages: ['Arabic', 'English universally spoken'],
+    currency: 'AED (د.إ)',
+    famousPlaces: [
+      {
+        id: 'burj-khalifa',
+        name: 'Burj Khalifa & At The Top',
+        category: 'Architecture',
+        description: 'The world\'s tallest architectural structure rising 828 meters into the clouds with observation lounges on floors 124, 125, and 148.',
+        insiderTip: 'Book the prime sunset slot to watch day turn into night and see the Dubai Fountain dancing from half a kilometer in the air.',
+        bestTimeToVisit: '17:00 – 18:30 for golden hour',
+        timeRequired: '2 Hours',
+        admissionFee: 'From AED 179',
+        imageQuery: 'burj khalifa dubai skyline sunset clouds',
+        backupImage: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'palm-jumeirah',
+        name: 'Palm Jumeirah & The View at The Palm',
+        category: 'Coastal',
+        description: 'An engineering wonder: a tree-shaped artificial island extending into the Arabian Gulf, fringed with luxury beach resorts and private villas.',
+        insiderTip: 'Take the Palm Monorail from the gateway station to Atlantis for an elevated view traversing the trunk.',
+        bestTimeToVisit: 'Late afternoon',
+        timeRequired: 'Half day',
+        admissionFee: 'The View: AED 100',
+        imageQuery: 'palm jumeirah dubai aerial island sea',
+        backupImage: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'al-fahidi',
+        name: 'Al Fahidi Historic District & Dubai Creek',
+        category: 'Historic',
+        description: 'A preserved 19th-century quarter with traditional gypsum and coral buildings topped by wind towers (barjeel), art galleries, and tea salons.',
+        insiderTip: 'Cross the creek on an authentic wooden abra boat for 1 AED to reach the Deira Gold and Spice Souks.',
+        bestTimeToVisit: 'Morning or late afternoon when temperatures cool',
+        timeRequired: '2–3 Hours',
+        admissionFee: 'Free entry (Museum AED 3)',
+        imageQuery: 'al fahidi historical neighbourhood dubai wind towers creek',
+        backupImage: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'museum-of-the-future',
+        name: 'Museum of the Future',
+        category: 'Architecture',
+        description: 'A torus-shaped architectural masterpiece enveloped in Arabic calligraphy quotes by Sheikh Mohammed bin Rashid Al Maktoum.',
+        insiderTip: 'Reserve tickets at least 2–3 weeks in advance online, as daily slots sell out quickly.',
+        bestTimeToVisit: '10:00 or 14:00',
+        timeRequired: '2–3 Hours',
+        admissionFee: 'AED 149',
+        imageQuery: 'museum of the future dubai architecture calligraphy',
+        backupImage: 'https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&w=800&q=80'
+      }
+    ]
+  },
+  {
+    id: 'bali',
+    name: 'Bali',
+    country: 'Indonesia',
+    continent: 'Asia',
+    tagline: 'Island of the Gods, emerald tiered rice terraces, and sacred coastal sea temples.',
+    description: 'A spiritual Indonesian sanctuary where Hindu temple ceremonies, tiered rainforest gorges, world-class surf breaks, and restorative wellness sanctuaries harmonize.',
+    curatorNote: 'Rise before dawn in Ubud to walk the Campuhan Ridge Trail. The morning mist over the valley with sounds of jungle birds is pure meditation.',
+    vibe: ['Wellness', 'Coastal', 'Heritage', 'Nature'],
+    coordinates: { lat: -8.3405, lng: 115.0920 },
+    bestSeason: 'April to October (Dry season with offshore breezes)',
+    idealDuration: '5–8 Days',
+    budgetLevel: '$$',
+    rating: 4.93,
+    reviewCount: 2200,
+    featured: false,
+    heroImageQuery: 'bali indonesia rice terraces temple ubud palm trees',
+    backupHeroImage: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1600&q=80',
+    culturalTips: [
+      'Always wear a sarong and sash when entering any Balinese Hindu temple (pura).',
+      'Step carefully around the small woven palm-leaf canang sari offerings placed on walkways.',
+      'Never touch people\'s heads, as the head is considered the sacred seat of the soul.'
+    ],
+    localDelicacies: ['Babi Guling suckling pig with crisp crackling', 'Nasi Campur with sambal matah', 'Bebek Betutu slow-cooked spiced duck', 'Fresh tropical dragonfruit smoothie bowls'],
+    languages: ['Balinese', 'Indonesian', 'English widely spoken'],
+    currency: 'IDR (Rp)',
+    famousPlaces: [
+      {
+        id: 'tegallalang',
+        name: 'Tegallalang Rice Terraces',
+        category: 'Nature',
+        description: 'Vibrant green cascading rice paddies shaped into valley terraces using the ancient 9th-century Balinese cooperative irrigation system known as Subak.',
+        insiderTip: 'Arrive at 06:30 for sunrise light beams breaking through the palm trees before tour buses arrive.',
+        bestTimeToVisit: '06:30 – 08:30',
+        timeRequired: '2 Hours',
+        admissionFee: 'IDR 25,000',
+        imageQuery: 'tegallalang rice terraces bali ubud morning light',
+        backupImage: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'tanah-lot',
+        name: 'Pura Tanah Lot Sea Temple',
+        category: 'Sacred',
+        description: 'An ancient Hindu pilgrimage shrine perched upon a rocky offshore islet that becomes surrounded by ocean waves during high tide.',
+        insiderTip: 'Watch sunset from the cliffside cafe terraces south of the temple with a fresh young coconut.',
+        bestTimeToVisit: '17:00 – 18:30 for iconic sunset silhouette',
+        timeRequired: '2 Hours',
+        admissionFee: 'IDR 60,000',
+        imageQuery: 'tanah lot sea temple bali sunset waves',
+        backupImage: 'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'ubud-monkey-forest',
+        name: 'Ubud Sacred Monkey Forest Sanctuary',
+        category: 'Nature',
+        description: 'A lush jungle ravine housing three 14th-century moss-covered Hindu temples and over 1,000 Balinese long-tailed macaques.',
+        insiderTip: 'Secure all loose items (sunglasses, phones, snacks) in a zipped bag before entering.',
+        bestTimeToVisit: '09:00 at opening',
+        timeRequired: '1.5 Hours',
+        admissionFee: 'IDR 80,000',
+        imageQuery: 'ubud monkey forest bali moss temple banyan tree',
+        backupImage: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80'
+      },
+      {
+        id: 'uluwatu-temple',
+        name: 'Pura Luhur Uluwatu & Kecak Fire Dance',
+        category: 'Sacred',
+        description: 'Perched 70 meters atop a sheer limestone cliff dropping into the Indian Ocean, celebrated for its daily sunset choral Kecak fire dance.',
+        insiderTip: 'Purchase Kecak fire dance tickets by 16:30; the open-air amphitheater fills up completely before the 18:00 performance.',
+        bestTimeToVisit: '16:30 for temple grounds, 18:00 for the Kecak performance',
+        timeRequired: '3 Hours',
+        admissionFee: 'Temple: IDR 50,000 | Dance: IDR 150,000',
+        imageQuery: 'uluwatu temple cliff sea sunset bali kecak',
+        backupImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80'
+      }
+    ]
   }
 ];
+

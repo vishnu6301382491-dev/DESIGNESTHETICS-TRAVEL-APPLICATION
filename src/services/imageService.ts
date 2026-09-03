@@ -14,18 +14,26 @@ export async function fetchDynamicImage(query: string, fallbackUrl: string): Pro
     return imageCache.get(cleanQuery)!;
   }
 
-  // 1. Try serverless backend proxy if deployed on Vercel
-  try {
-    const proxyRes = await fetch(`/api/images?query=${encodeURIComponent(query)}`, { signal: AbortSignal.timeout(3000) });
-    if (proxyRes.ok) {
-      const data = await proxyRes.json();
-      if (data.imageUrl) {
-        imageCache.set(cleanQuery, data.imageUrl);
-        return data.imageUrl;
+  const isStaticHost =
+    typeof window !== 'undefined' &&
+    (window.location.hostname.includes('github.io') ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1');
+
+  // 1. Try serverless backend proxy only if on custom server/Vercel with backend
+  if (!isStaticHost && import.meta.env.VITE_ENABLE_SERVERLESS_PROXY === 'true') {
+    try {
+      const proxyRes = await fetch(`/api/images?query=${encodeURIComponent(query)}`, { signal: AbortSignal.timeout(3000) });
+      if (proxyRes.ok) {
+        const data = await proxyRes.json();
+        if (data.imageUrl) {
+          imageCache.set(cleanQuery, data.imageUrl);
+          return data.imageUrl;
+        }
       }
+    } catch {
+      // Ignore
     }
-  } catch (err) {
-    // Expected on static hosts
   }
 
   // 2. Try Unsplash API if key is present

@@ -50,21 +50,29 @@ Best season: ${destinationContext.bestSeason}.`
     }
   ];
 
-  // 1. Try serverless backend proxy on Vercel
-  try {
-    const proxyRes = await fetch('/api/gemini', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ contents }),
-      signal: AbortSignal.timeout(6000)
-    });
-    if (proxyRes.ok) {
-      const data = await proxyRes.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (text) return text;
+  const isStaticHost =
+    typeof window !== 'undefined' &&
+    (window.location.hostname.includes('github.io') ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1');
+
+  // 1. Try serverless backend proxy only if on custom server/Vercel with backend
+  if (!isStaticHost && import.meta.env.VITE_ENABLE_SERVERLESS_PROXY === 'true') {
+    try {
+      const proxyRes = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents }),
+        signal: AbortSignal.timeout(4000)
+      });
+      if (proxyRes.ok) {
+        const data = await proxyRes.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (text) return text;
+      }
+    } catch {
+      // Ignore
     }
-  } catch (err) {
-    // Expected on static hosts
   }
 
   // 2. Try client-side API key if available

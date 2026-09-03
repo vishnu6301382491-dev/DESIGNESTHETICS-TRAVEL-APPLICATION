@@ -62,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
-        <Link to="/" className="flex items-center gap-2.5 group">
+        <Link to="/" className="flex items-center gap-2.5 group shrink-0 mr-4 sm:mr-6 lg:mr-10">
           <div className="w-8 h-8 rounded-full bg-champagne/15 border border-champagne/40 flex items-center justify-center text-champagne group-hover:scale-105 transition-transform duration-300 shadow-glow-gold">
             <Compass className="w-4 h-4" />
           </div>
@@ -72,7 +72,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         </Link>
 
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-sand-300">
+        <nav className="hidden md:flex items-center gap-4 lg:gap-7 text-xs font-mono uppercase tracking-widest text-sand-300">
           <NavLink to="/" className={navLinkClass}>
             Home
           </NavLink>

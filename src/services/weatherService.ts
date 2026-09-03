@@ -60,40 +60,48 @@ export async function fetchLiveWeather(lat: number, lng: number, locationName: s
     return cached.data;
   }
 
-  // 1. Try serverless backend proxy if deployed on Vercel
-  try {
-    const proxyRes = await fetch(`/api/weather?lat=${lat}&lon=${lng}`, { signal: AbortSignal.timeout(4000) });
-    if (proxyRes.ok) {
-      const data = await proxyRes.json();
-      if (data.main && data.weather) {
-        const temp = Math.round(data.main.temp);
-        const feelsLike = Math.round(data.main.feels_like);
-        const condition = data.weather[0]?.main || 'Clear';
-        const description = data.weather[0]?.description || 'Clear sky';
-        const windKmh = Math.round((data.wind?.speed || 0) * 3.6);
+  const isStaticHost =
+    typeof window !== 'undefined' &&
+    (window.location.hostname.includes('github.io') ||
+      window.location.hostname === 'localhost' ||
+      window.location.hostname === '127.0.0.1');
 
-        const result: WeatherData = {
-          temp,
-          feelsLike,
-          tempMin: Math.round(data.main.temp_min),
-          tempMax: Math.round(data.main.temp_max),
-          condition,
-          description: description.charAt(0).toUpperCase() + description.slice(1),
-          icon: data.weather[0]?.icon ? `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png` : 'sun',
-          humidity: data.main.humidity,
-          windSpeed: windKmh,
-          uvIndex: 5,
-          packingAdvice: generatePackingAdvice(temp, condition, windKmh),
-          isLive: true,
-          source: 'OpenWeather',
-          lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        };
-        weatherCache.set(cacheKey, { data: result, timestamp: Date.now() });
-        return result;
+  // 1. Try serverless backend proxy only if on custom server/Vercel with backend
+  if (!isStaticHost && import.meta.env.VITE_ENABLE_SERVERLESS_PROXY === 'true') {
+    try {
+      const proxyRes = await fetch(`/api/weather?lat=${lat}&lon=${lng}`, { signal: AbortSignal.timeout(3000) });
+      if (proxyRes.ok) {
+        const data = await proxyRes.json();
+        if (data.main && data.weather) {
+          const temp = Math.round(data.main.temp);
+          const feelsLike = Math.round(data.main.feels_like);
+          const condition = data.weather[0]?.main || 'Clear';
+          const description = data.weather[0]?.description || 'Clear sky';
+          const windKmh = Math.round((data.wind?.speed || 0) * 3.6);
+
+          const result: WeatherData = {
+            temp,
+            feelsLike,
+            tempMin: Math.round(data.main.temp_min),
+            tempMax: Math.round(data.main.temp_max),
+            condition,
+            description: description.charAt(0).toUpperCase() + description.slice(1),
+            icon: data.weather[0]?.icon ? `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png` : 'sun',
+            humidity: data.main.humidity,
+            windSpeed: windKmh,
+            uvIndex: 5,
+            packingAdvice: generatePackingAdvice(temp, condition, windKmh),
+            isLive: true,
+            source: 'OpenWeather',
+            lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+          };
+          weatherCache.set(cacheKey, { data: result, timestamp: Date.now() });
+          return result;
+        }
       }
+    } catch {
+      // Ignore
     }
-  } catch (err) {
-    // Expected when running on static host (e.g. GitHub Pages) without serverless functions
   }
 
   // 2. If client OpenWeather API key is configured, use it

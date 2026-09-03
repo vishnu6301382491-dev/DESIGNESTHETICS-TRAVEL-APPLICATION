@@ -40,24 +40,17 @@
 
 ## 2. Screenshots of the Application
 
-### 📍 Destination Explorer & Multi-Dimensional Filtering
-*Real-time filtering by continents, travel vibes, and budget tiers with live atmospheric weather badges and distance telemetry from the user's departure city:*
-
-![Destination Explorer](docs/screenshots/explorer-desktop.png)
-
----
-
 ### 🎥 Cinematic Landing Experience & Video Hero
-*High-definition looping aerial video hero with audio toggle, instant search, metrics ticker, and editorial typography:*
+*Editorial headline ("The Art of Considered Wandering."), looping drone video background with audio toggle, instant search bar, continent chips, and live departure location telemetry:*
 
-![Landing Hero Experience](docs/screenshots/hero-preview.png)
+![Landing Hero Experience](docs/screenshots/hero-landing.png)
 
 ---
 
-### 🗺️ Full Application Experience & Dossiers
-*Overview of the application interface, interactive dossiers, and AI itinerary planner:*
+### 📍 Destination Explorer & Multi-Dimensional Filtering
+*Interactive destination explorer showcasing curated sanctuaries (Tokyo, Paris, Kyoto), continent tabs, live weather telemetry, distance indicators, and refined vibe/budget filters:*
 
-![Application Experience](docs/screenshots/preview-full.png)
+![Destination Explorer](docs/screenshots/destination-explorer.png)
 
 ---
 

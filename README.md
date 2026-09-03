@@ -3,9 +3,19 @@
 > **Front-End Developer Assignment Submission**  
 > An editorial-grade travel web application built with **React**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**, powered by **Google Gemini AI**, **OpenWeather**, **Open-Meteo Telemetry**, and **Unsplash**.
 
-### 🔗 Live Links
-- 🌐 **Live Deployed Application**: [https://temporary-flying-iron-b8p6hde.vercel.app](https://temporary-flying-iron-b8p6hde.vercel.app)
+### 🔗 Live Production Links
+- 🌐 **Live Deployed Application**: [https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/)
 - 📦 **Public GitHub Repository**: [https://github.com/vishnu6301382491-dev/DESIGNESTHETICS-TRAVEL-APPLICATION](https://github.com/vishnu6301382491-dev/DESIGNESTHETICS-TRAVEL-APPLICATION)
+
+#### 🧭 Quick Navigation Routes:
+- **Home**: [`/#/`](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/#/)
+- **Explorer**: [`/#/explore`](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/#/explore)
+- **Paris Dossier**: [`/#/destinations/paris`](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/#/destinations/paris)
+- **Tokyo Dossier**: [`/#/destinations/tokyo`](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/#/destinations/tokyo)
+- **Dubai Dossier**: [`/#/destinations/dubai`](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/#/destinations/dubai)
+- **Bali Dossier**: [`/#/destinations/bali`](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/#/destinations/bali)
+- **AI Itinerary Planner**: [`/#/planner`](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/#/planner)
+- **AI Concierge Salon**: [`/#/assistant`](https://vishnu6301382491-dev.github.io/DESIGNESTHETICS-TRAVEL-APPLICATION/#/assistant)
 
 ---
 
